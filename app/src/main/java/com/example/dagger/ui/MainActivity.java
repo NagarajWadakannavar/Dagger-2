@@ -1,12 +1,19 @@
-package com.example.dagger;
+package com.example.dagger.ui;
 
 import android.os.Bundle;
 
+import com.example.dagger.DaggerApplication;
+import com.example.dagger.R;
+import com.example.dagger.dependencyinjection.application.ApplicationComponent;
+import com.example.dagger.dependencyinjection.presentation.DaggerPresentationComponent;
+import com.example.dagger.dependencyinjection.presentation.PresentationComponent;
+import com.example.dagger.dependencyinjection.presentation.PresentationModule;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -21,9 +28,18 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
+import javax.inject.Inject;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+
+    @Inject
+    public AlertDialog alertDialog;
+    @Inject
+    public APIService apiService;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        ApplicationComponent applicationComponent = ((DaggerApplication)getApplication()).getApplicationComponent();
+        PresentationComponent component = DaggerPresentationComponent.builder().presentationModule(new PresentationModule(this)).applicationComponent(applicationComponent).build();
+//        AlertDialog alertDialog = component.getIntroductionAlertDialog();
+//        alertDialog.show();
+        component.inject(this);
     }
 
     @Override

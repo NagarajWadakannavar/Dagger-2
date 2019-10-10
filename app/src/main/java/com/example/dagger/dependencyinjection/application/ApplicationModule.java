@@ -1,4 +1,7 @@
-package com.example.dagger;
+package com.example.dagger.dependencyinjection.application;
+
+import com.example.dagger.ui.APIService;
+import com.example.dagger.model.Person;
 
 import javax.inject.Singleton;
 
@@ -23,5 +26,10 @@ public class ApplicationModule {
     @Provides
     public APIService getAPIService(Retrofit retrofit) {
         return retrofit.create(APIService.class);
+    }
+
+    @Provides
+    public Person getPerson(){
+        return new Person();
     }
 }

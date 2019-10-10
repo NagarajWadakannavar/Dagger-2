@@ -1,4 +1,4 @@
-package com.example.dagger;
+package com.example.dagger.ui;
 
 import com.example.dagger.model.Person;
 
