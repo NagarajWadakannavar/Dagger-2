@@ -1,35 +1,35 @@
 package com.example.dagger.dependencyinjection.application;
 
-import com.example.dagger.ui.APIService;
-import com.example.dagger.model.Person;
+import android.content.Context;
+import android.content.SharedPreferences;
 
-import javax.inject.Singleton;
+import com.example.dagger.model.Person;
+import com.example.dagger.utils.Constants;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class ApplicationModule {
 
-    @Singleton
-    @Provides
-    public Retrofit getRetrofit() {
-        Retrofit.Builder builder = new Retrofit.Builder();
-        builder.baseUrl("https://api.github.com/");
-        builder.addConverterFactory(GsonConverterFactory.create());
-        return builder.build();
-    }
+    private final Context context;
 
-    @Singleton
-    @Provides
-    public APIService getAPIService(Retrofit retrofit) {
-        return retrofit.create(APIService.class);
+    public ApplicationModule(Context context) {
+        this.context = context;
     }
 
     @Provides
-    public Person getPerson(){
+    public Context getContext() {
+        return context;
+    }
+
+    @Provides
+    public SharedPreferences getSharedPreference(Context context) {
+        return context.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE);
+    }
+
+    @Provides
+    public Person getPerson() {
         return new Person();
     }
 }

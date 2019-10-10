@@ -1,11 +1,11 @@
 package com.example.dagger.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.dagger.DaggerApplication;
 import com.example.dagger.R;
 import com.example.dagger.dependencyinjection.application.ApplicationComponent;
-import com.example.dagger.dependencyinjection.presentation.DaggerPresentationComponent;
 import com.example.dagger.dependencyinjection.presentation.PresentationComponent;
 import com.example.dagger.dependencyinjection.presentation.PresentationModule;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     public APIService apiService;
 
+    @Inject
+    public SharedPreferences sharedPreferences;
 
 
     @Override
@@ -67,10 +69,9 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        ApplicationComponent applicationComponent = ((DaggerApplication)getApplication()).getApplicationComponent();
-        PresentationComponent component = DaggerPresentationComponent.builder().presentationModule(new PresentationModule(this)).applicationComponent(applicationComponent).build();
-//        AlertDialog alertDialog = component.getIntroductionAlertDialog();
-//        alertDialog.show();
+
+        ApplicationComponent applicationComponent = ((DaggerApplication) getApplication()).getApplicationComponent();
+        PresentationComponent component = applicationComponent.newPresentationComponent(new PresentationModule(this));
         component.inject(this);
     }
 
