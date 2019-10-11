@@ -17,6 +17,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions 'client', 'server'
+    productFlavors {
+        client1 {
+            dimension = 'client'
+            applicationIdSuffix = 'client1'
+            versionNameSuffix = '-free'
+        }
+        client2 {
+            dimension = 'client'
+            applicationIdSuffix = 'client2'
+            versionNameSuffix = '-paid'
+        }
+        development {
+            dimension = 'server'
+            applicationIdSuffix = 'development'
+            versionNameSuffix = '-development'
+        }
+        production {
+            dimension = 'server'
+            applicationIdSuffix = 'production'
+            versionNameSuffix = '-production'
+
+        }
+    }
 }
 
 dependencies {
