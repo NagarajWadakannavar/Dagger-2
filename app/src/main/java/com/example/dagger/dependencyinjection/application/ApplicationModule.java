@@ -1,10 +1,9 @@
 package com.example.dagger.dependencyinjection.application;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.dagger.DaggerApplication;
+import com.example.dagger.SampleApplication;
 import com.example.dagger.model.Person;
 import com.example.dagger.utils.Constants;
 
@@ -15,7 +14,7 @@ import dagger.Provides;
 public class ApplicationModule {
 
     @Provides
-    public Context provideApplicationContext(DaggerApplication application) {
+    public Context provideApplicationContext(SampleApplication application) {
         return application;
     }
 

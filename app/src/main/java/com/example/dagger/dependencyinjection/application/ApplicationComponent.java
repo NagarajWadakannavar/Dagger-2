@@ -1,25 +1,20 @@
 package com.example.dagger.dependencyinjection.application;
 
-import com.example.dagger.DaggerApplication;
+import com.example.dagger.SampleApplication;
 
 import javax.inject.Singleton;
 
-import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
+import dagger.android.AndroidInjector;
 
 @Singleton
 @Component(modules = {AndroidInjectionModule.class,
         ApplicationModule.class, NetworkModule.class, ActivityBuilderModule.class})
-public interface ApplicationComponent {
+public interface ApplicationComponent extends AndroidInjector<SampleApplication> {
 
     @Component.Builder
-    interface Builder {
-        @BindsInstance
-        Builder application(DaggerApplication daggerApplication);
-
-        ApplicationComponent build();
+    abstract class Builder extends AndroidInjector.Builder<SampleApplication> {
     }
 
-    void inject(DaggerApplication daggerApplication);
 }
