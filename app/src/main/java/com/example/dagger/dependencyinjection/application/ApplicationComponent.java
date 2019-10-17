@@ -1,19 +1,17 @@
 package com.example.dagger.dependencyinjection.application;
 
 import com.example.dagger.DaggerApplication;
-import com.example.dagger.dependencyinjection.presentation.PresentationComponent;
-import com.example.dagger.dependencyinjection.presentation.PresentationModule;
 
 import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import dagger.android.AndroidInjectionModule;
 
 @Singleton
-@Component(modules = {ApplicationModule.class, NetworkModule.class})
+@Component(modules = {AndroidInjectionModule.class,
+        ApplicationModule.class, NetworkModule.class, ActivityBuilderModule.class})
 public interface ApplicationComponent {
-
-    PresentationComponent newPresentationComponent(PresentationModule presentationModule);
 
     @Component.Builder
     interface Builder {
@@ -22,4 +20,6 @@ public interface ApplicationComponent {
 
         ApplicationComponent build();
     }
+
+    void inject(DaggerApplication daggerApplication);
 }

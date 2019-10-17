@@ -1,24 +1,33 @@
 package com.example.dagger;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.example.dagger.dependencyinjection.application.ApplicationComponent;
 import com.example.dagger.dependencyinjection.application.DaggerApplicationComponent;
 
-public class DaggerApplication extends Application {
+import javax.inject.Inject;
 
-    private ApplicationComponent applicationComponent;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+
+public class DaggerApplication extends Application implements HasActivityInjector {
+
+    @Inject
+    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
     @Override
     public void onCreate() {
         super.onCreate();
         ApplicationComponent.Builder builder = DaggerApplicationComponent.builder();
         builder.application(this);
-        applicationComponent = builder.build();
+        builder.build().inject(this);
     }
 
-    public ApplicationComponent getApplicationComponent() {
-        return applicationComponent;
-    }
 
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return dispatchingAndroidInjector;
+    }
 }
