@@ -18,7 +18,7 @@ public class PresentationModule {
     }
 
     @Provides
-    public AlertDialog getAlertDialog() {
+    public AlertDialog provideAlertDialog() {
         return new AlertDialog.Builder(activity).setMessage("Hello! This is a part of dagger introduction").setPositiveButton("OK, GOT IT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

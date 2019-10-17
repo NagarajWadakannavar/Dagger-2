@@ -25,3 +25,9 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+// This block encapsulates custom properties and makes them available to all
+// modules in the project.
+ext {
+    daggerVersion = "2.14.1"
+    retrofitVersion = "2.6.1"
+}

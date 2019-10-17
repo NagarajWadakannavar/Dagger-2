@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
     @Singleton
     @Provides
-    public Retrofit getRetrofit() {
+    public Retrofit provideRetrofit() {
         Retrofit.Builder builder = new Retrofit.Builder();
         builder.baseUrl(Constants.BASE_URL);
         builder.addConverterFactory(GsonConverterFactory.create());
@@ -23,7 +23,7 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    public APIService getAPIService(Retrofit retrofit) {
+    public APIService provideAPIService(Retrofit retrofit) {
         return retrofit.create(APIService.class);
     }
 }

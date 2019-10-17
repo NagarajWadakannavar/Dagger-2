@@ -1,8 +1,10 @@
 package com.example.dagger.dependencyinjection.application;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.dagger.DaggerApplication;
 import com.example.dagger.model.Person;
 import com.example.dagger.utils.Constants;
 
@@ -12,19 +14,13 @@ import dagger.Provides;
 @Module
 public class ApplicationModule {
 
-    private final Context context;
-
-    public ApplicationModule(Context context) {
-        this.context = context;
+    @Provides
+    public Context provideApplicationContext(DaggerApplication application) {
+        return application;
     }
 
     @Provides
-    public Context getContext() {
-        return context;
-    }
-
-    @Provides
-    public SharedPreferences getSharedPreference(Context context) {
+    public SharedPreferences provideSharedPreference(Context context) {
         return context.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE);
     }
 
